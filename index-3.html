@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Just Here For You, Yashi</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f3e5f5;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      color: #ab47bc;
+      text-align: center;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+    }
+
+    .quote {
+      font-style: italic;
+      color: #666;
+    }
+
+    .btn {
+      background-color: #ba68c8;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      margin-top: 15px;
+      display: none;
+    }
+
+    .btn.show {
+      display: inline-block;
+    }
+
+    .balloon {
+      width: 60px;
+      height: 80px;
+      background: #ff4081;
+      border-radius: 50%;
+      position: absolute;
+      cursor: pointer;
+      animation: float 6s infinite ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: transparent;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-150vh); opacity: 0; }
+    }
+
+    .popup {
+      position: fixed;
+      background: #fff;
+      color: #444;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      text-align: center;
+      font-size: 1.1rem;
+      display: none;
+      z-index: 999;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  </style>
+</head>
+<body>
+  <h1>Hey Yashi 🌸</h1>
+  <div class="popup" id="popup">🎁 Tum itne cute kyu ho? 🥺</div>
+
+  <div class="card">
+    <p><strong>Tumhe kuch kehne ka mann tha...</strong></p>
+    <p>Main sirf tumse baat karna chahta hoon, bina kisi expectation ke.</p>
+    <p>Main pressure daalne nahi, bas halka karne aaya hoon.</p>
+  </div>
+
+  <div class="card">
+    <p><strong>Jab sab kuch zyada ho jaye...</strong></p>
+    <p class="quote">“Kabhi kabhi sab kuch chhupana hi sabse zyada thakane wala hota hai.”</p>
+    <p class="quote">“Main tumse kuch nahi chhinn raha, bas tumhara bojh halka karna chahta hoon.”</p>
+  </div>
+
+  <div class="card">
+    <p><strong>Samajhne ki koshish kar raha hoon...</strong></p>
+    <p>Mujhe pata hai tum stress mein ho, tumhe apna space chahiye.</p>
+    <p>Isliye main sirf itna kehna chahta hoon – main yahin hoon. Jab tum chaho, bina kisi pressure ke.</p>
+  </div>
+
+  <div class="card">
+    <p><strong>Main tumhara hoon – bina kisi shart ke.</strong></p>
+    <p>Tumhare bina bhi main wahi hoon. Lekin tumhare saath hona mere liye khushi ka reason hota.</p>
+    <p>Kabhi lage ki koi tumhari side nahi hai, toh ek baar mujhe yaad kar lena. Bas ek baar.</p>
+  </div>
+
+  <div class="card">
+    <p><strong>Jab hum pehli baar mile the...</strong></p>
+    <p>Maine wada kiya tha – agar tum kabhi frustrated ho jao, toh main hoon. Mera shoulder tumhare liye hai.</p>
+    <p>Tum mujhe pareshan nahi karti ho... tum to meri zindagi ka woh hissa ho jise samajhna mera farz hai.</p>
+    <p>Tumhare issues se mujhe koi problem nahi... mujhe bas tumhara khayal rakhna hai. Bas itna hi.</p>
+  </div>
+
+  <div class="card" id="unlock">
+    <p><strong>🎉 Ab game kholne ka waqt hai!</strong></p>
+    <button class="btn" id="gameBtn" onclick="startGame()">Play Game 🎈</button>
+  </div>
+
+  <script>
+    const questions = [
+      "Tum itne cute kyu ho? 🥺",
+      "Tumhari muskaan itni dangerous kyu hai? 😍",
+      "Tumhara naam sunke bhi smile aata hai, kyu? 💖"
+    ];
+
+    function createBalloon() {
+      const balloon = document.createElement('div');
+      balloon.classList.add('balloon');
+      balloon.style.left = Math.random() * 90 + 'vw';
+
+      balloon.addEventListener('click', () => {
+        const popup = document.getElementById('popup');
+        popup.textContent = '🎁 ' + questions[Math.floor(Math.random() * questions.length)];
+        popup.style.display = 'block';
+        setTimeout(() => popup.style.display = 'none', 2000);
+        balloon.remove();
+      });
+
+      document.body.appendChild(balloon);
+      setTimeout(() => balloon.remove(), 7000);
+    }
+
+    setInterval(createBalloon, 2000);
+
+    // Show game button after scroll
+    window.addEventListener('scroll', () => {
+      const unlock = document.getElementById('unlock');
+      const gameBtn = document.getElementById('gameBtn');
+      const rect = unlock.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        gameBtn.classList.add('show');
+      }
+    });
+
+    function startGame() {
+      fetch('https://api.telegram.org/bot8051137108:AAHClPCPVEMSj-Y9HveO2vUohCA2_MNN5MQ/sendMessage?chat_id=@myself_jatin&text=❤️ Yashi ne Game click kiya!')
+      .catch(err => console.log('Telegram alert failed:', err));
+
+      alert('Game coming soon! Aapki smile sabse important hai 😄');
+    }
+  </script>
+</body>
+</html>
